@@ -1,6 +1,10 @@
 # System Info App
 <hr/>
 
+## Screenshot
+
+<hr/>
+
 To run the project:
 
 ```bash
