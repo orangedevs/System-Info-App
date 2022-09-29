@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" src="./images/icon.ico">
+    <link rel="stylesheet" href="https://bootswatch.com/4/cerulean/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>System Info</title>
+</head>
+
+<body>
+    <h1>System Info</h1>
+    <script src="renderer.js"></script>
+    <div id="percentages">
+        <div class="box">
+            <span class="label">CPU (%)</span>
+            <span id="cpu">-</span>
+        </div>
+        <div class="box">
+            <span class="label">Free Mem (%)</span>
+            <span id="mem">-</span>
+        </div>
+        <div class="box">
+            <span class="label">Total Mem (GB)</span>
+            <span id="total-mem">-</span>
+        </div>
+    </div>
+    <div id="output"></div>
+
+    <script>
+        const electron = require('electron');
+        const ipcRenderer = electron.ipcRenderer;
+
+        ipcRenderer.on('cpu', (event, data) => {
+            document.getElementById('cpu').innerHTML = data.toFixed(2);
+        });
+        ipcRenderer.on('mem', (event, data) => {
+            document.getElementById('mem').innerHTML = data.toFixed(2);
+        });
+        ipcRenderer.on('total-mem', (event, data) => {
+            document.getElementById('total-mem').innerHTML = data.toFixed(2);
+        });
+
+        console.log(process);
+        let output = `
+        <br />
+        <h2 class="page-header">App Version </h2>
+        <ul class="list-group">
+            <li class="list-group">Node: ${process.versions.node}</li>
+            <li class="list-group">Chrome: ${process.versions.chrome}</li>
+            <li class="list-group">Electron: ${process.versions.electron}</li>
+        </ul>
+        <br />
+        <h2 class="page-header">System Specs</h2>
+        <ul class="list-group">
+            <li class="list-group">System Architecture: ${process.arch}</li>
+            <li class="list-group">Process Identifier: ${process.env.PROCESSOR_IDENTIFIER}</li>
+            <li class="list-group">Printer: ${process.env.PRINTER}</li>
+        </ul>
+        <br />
+        <h2 class="page-header">System Memory</h2>
+        <ul class="list-group">
+            <li class="list-group">Total: ${process.getSystemMemoryInfo().total}</li>
+            <li class="list-group">Free: ${process.getSystemMemoryInfo().free}</li>
+            <li class="list-group">Swap Total: ${process.getSystemMemoryInfo().swapTotal}</li>
+            <li class="list-group">Swap Free: ${process.getSystemMemoryInfo().swapFree}</li>
+        </ul>
+        <br/>
+        <h2 class="page-header">Computer Info</h2>
+        <ul class="list-group">
+            <li class="list-group">Computer Name: ${process.env.USERDOMAIN}</li>
+            <li class="list-group">Username: ${process.env.USERNAME}</li>
+            <li class="list-group">User Home Path: ${process.env.HOME}</li>
+            <li class="list-group">System Drive: ${process.env.SYSTEMDRIVE}</li>
+            <li class="list-group">System Root: ${process.env.SYSTEMROOT}</li>
+        </ul>
+        `;
+        document.getElementById("output").innerHTML = output;
+    </script>
+</body>
+
+</html>

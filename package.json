@@ -1,0 +1,56 @@
+{
+  "name": "system-info",
+  "version": "1.0.0",
+  "description": "An application to display System Information by Orange Dev",
+  "main": "src/index.js",
+  "company": "Orange Dev",
+  "Company": "Orange Dev",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager .",
+    "build": "electron-builder --win",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rebuild-deps": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^10.1.0",
+    "electron-packager": "^15.1.0"
+  },
+  "dependencies": {
+    "electron-builder": "^23.3.3",
+    "os-utils": "0.0.14"
+  },
+  "build": {
+    "appId": "com.sysInfo.app",
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "mac": {
+      "icon": "./images/icon.ico"
+    },
+    "win": {
+      "icon": "./images/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "installerIcon": "./icons/browser.ico",
+      "uninstallerIcon": "./icons/browser.ico",
+      "uninstallDisplayName": "Orange Browser",
+      "oneClick": true,
+      "perMachine": false,
+      "artifactName": "OrangeBrowser.${ext}"
+    }
+  }
+}
