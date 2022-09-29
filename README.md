@@ -1,4 +1,4 @@
-#System Info App
+# System Info App
 <hr/>
 To run the project:
 ```bash
